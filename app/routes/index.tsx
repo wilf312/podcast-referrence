@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 
 export default function Index() {
   const [data, setData] = useState({});
@@ -8,12 +8,34 @@ export default function Index() {
       .then((res) => res.json())
       .then((data) => {
         setData(data);
-        setEpisodeList(data.episodes);
+        setEpisodeList(data.item);
       });
   }, []);
+
+  const e = useMemo(() => {
+    return episodeList.map((d) => {
+      console.log(d);
+      return {
+        publishOnUnixTimestamp: d.publishOnUnixTimestamp,
+        title: d.title,
+        pubDate: d.pubDate,
+        enclosure: d.enclosure,
+        src: d.enclosure["@_url"],
+        length: d.enclosure["@_length"],
+        episodeEnclosureUrl: d.episodeEnclosureUrl,
+        duration: d.duration,
+        duration: d.duration,
+      };
+    });
+  }, [episodeList]);
+
   return (
     <div style={{ fontFamily: "system-ui, sans-serif", lineHeight: "1.4" }}>
       <h1>Welcome to Remix</h1>
+      {e.at(0)?.src && <audio controls src={e.at(0).src} key={e.at(0).src} />}
+      {/* {e.map((e) => {
+        return <audio src={e.src} key={e.src} />;
+      })} */}
 
       {/* 
 {
@@ -41,24 +63,7 @@ export default function Index() {
     "spotifyUrl": "https://open.spotify.com/episode/6VLMrsvOoUFXif8bVpg6MQ"
   },
 */}
-      <pre>
-        {JSON.stringify(
-          episodeList.map((d) => {
-            console.log(d);
-            return {
-              publishOnUnixTimestamp: d.publishOnUnixTimestamp,
-              title: d.title,
-              duration: d.duration,
-              descriptionPreview: d.descriptionPreview,
-              episodeEnclosureUrl: d.episodeEnclosureUrl,
-              duration: d.duration,
-              duration: d.duration,
-            };
-          }),
-          null,
-          2
-        )}
-      </pre>
+      <pre>{JSON.stringify(e, null, 2)}</pre>
       {/* <pre>{JSON.stringify(data, null, 2)}</pre> */}
     </div>
   );
