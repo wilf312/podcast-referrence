@@ -45,7 +45,7 @@ export default function Index() {
       {e.map((e, i) => {
         return (
           <div key={i}>
-            <Link to={`/content/${data?.podcastName}/${e.episode}`}>
+            <Link to={`/content/${data.params.podcastName}/${e.episode}`}>
               {e.title}
             </Link>
           </div>
