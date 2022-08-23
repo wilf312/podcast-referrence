@@ -4,7 +4,7 @@ for VAL in `cat ./shell/url.txt`
 
 
 curl=`cat <<EOS
-curl 'https://anchor.fm/s/319a2820/podcast/rss' \
+curl '$VAL' \
   -H 'authority: anchor.fm' \
   -H 'accept: */*' \
   -H 'accept-language: en-US,en;q=0.9,ja;q=0.8,ko;q=0.7' \
@@ -17,7 +17,7 @@ curl 'https://anchor.fm/s/319a2820/podcast/rss' \
   -H 'sec-fetch-mode: no-cors' \
   -H 'sec-fetch-site: cross-site' \
   -H 'user-agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/104.0.0.0 Safari/537.36' \
-  --compressed
+  --compressed >> `$VAL.xml`
 EOS`
 ${curl}
     # curl '$VAL' \
