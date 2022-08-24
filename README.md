@@ -1,5 +1,21 @@
 # podcast-referrence
 
+## できること
+
+### cron
+1. [ ] update xml
+1. [ ] add xml
+1. [ ] delete xml
+1. [ ] change xml url
+
+### podcast referrence
+1. [ ] プレイヤー
+1. [ ] シェアした時に聞いている秒数でシェアできる
+1. [ ] シェアした時にハッシュタグ＋ep番号がつく
+1. [ ] トップページにポッドキャストの一覧がつく
+
+
+
 # Welcome to Remix!
 
 - [Remix Docs](https://remix.run/docs)
