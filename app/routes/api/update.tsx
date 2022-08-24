@@ -25,8 +25,6 @@ const rss = async () => {
   });
   const jObj = parser.parse(res);
 
-  console.log(jObj.rss[0].channel);
-
   const master = jObj.rss[0].channel;
 
   return master;
