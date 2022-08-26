@@ -4,16 +4,17 @@
 
 ### cron
 
-1. [ ] update xml
-1. [ ] add xml
-1. [ ] delete xml
-1. [ ] change xml url
-1. [ ] 登録されている rss の一覧
+1. [x] update xml
+1. [x] add xml
+1. [x] delete xml
+1. [x] change xml url
+1. [x] 登録されている rss の一覧
+1. [ ] anchor などのポッドキャスト配信サイトのrssはホワイトリストで透過的に取得する
 
 ### podcast referrence
 
-1. [ ] トップページにポッドキャストの一覧がつく
-1. [ ] プレイヤー
+1. [x] トップページにポッドキャストの一覧がつく
+1. [x] プレイヤー
 1. [ ] シェアした時に聞いている秒数でシェアできる
 1. [ ] シェアした時にハッシュタグ＋ ep 番号がつく
 
