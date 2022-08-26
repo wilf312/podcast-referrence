@@ -8,7 +8,6 @@ import { getEncodedUrl } from "~/config";
 
 const getJSON = async (hashEncoded: string) => {
   const url = `https://action-ten.vercel.app/${hashEncoded}.json`;
-  console.log({ url });
   const res = await fetch(url, {
     method: "GET",
     mode: "cors",
@@ -30,8 +29,6 @@ export const loader: LoaderFunction = async ({ params }) => {
       status: 404,
     });
   }
-  console.log({ params, found });
-
   const res = await getJSON(found?.hashEncoded);
 
   return json(res);
