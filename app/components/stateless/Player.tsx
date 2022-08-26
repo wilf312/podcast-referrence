@@ -1,6 +1,10 @@
 import { useRef, useEffect } from "react";
 
-export const Player = (props: { src: string }) => {
+type props = {
+  src: string;
+  tweetUrl: string;
+};
+export const Player = (props: props) => {
   const audioRef = useRef<HTMLAudioElement>();
 
   const a = () => {
@@ -23,6 +27,16 @@ export const Player = (props: { src: string }) => {
   }, [audioRef.current]);
 
   return (
-    <audio controls src={props.src} ref={audioRef} style={{ width: "95vw" }} />
+    <div>
+      <audio
+        controls
+        src={props.src}
+        ref={audioRef}
+        style={{ width: "95vw" }}
+      />
+      <a href={props.tweetUrl} target="_blank" rel="noreferrer">
+        ツイーヨ
+      </a>
+    </div>
   );
 };
