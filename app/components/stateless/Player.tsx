@@ -3,7 +3,7 @@ import { useRef, useEffect } from "react";
 type props = {
   src: string;
   tweetUrl: string;
-  onPlay: () => void;
+  onPlay?: () => void;
 };
 export const Player = (props: props) => {
   const audioRef = useRef<HTMLAudioElement>();
