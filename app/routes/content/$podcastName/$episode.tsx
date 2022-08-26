@@ -1,14 +1,15 @@
-import { useMemo, useRef, useEffect } from "react";
 import { json } from "@remix-run/cloudflare";
 import { useLoaderData } from "@remix-run/react";
 import type { LoaderFunction } from "@remix-run/cloudflare";
-import { Link } from "@remix-run/react";
+import { EpisodeList } from "~/components/stateless/EpisodeList";
+import type { EpisodeItem } from "~/components/stateless/EpisodeList";
+import { Player } from "~/components/stateless/Player";
 
 export const loader: LoaderFunction = async ({ params, request }) => {
   const url = new URL(request.url);
-  const podcast = await fetch(`${url.origin}/api/update`).then((res) =>
-    res.json()
-  );
+  const podcast = await fetch(
+    `${url.origin}/api/get/${params.podcastName}`
+  ).then((res) => res.json());
 
   return json({
     params,
@@ -17,64 +18,29 @@ export const loader: LoaderFunction = async ({ params, request }) => {
 };
 export default function Index() {
   const data = useLoaderData<typeof loader>();
+
   console.log(data);
-
   const episodeList = data.podcast.item;
+  const episode = episodeList.find((d: EpisodeItem) => {
+    return (
+      `${d["itunes:episode"]}` === data.params.episode ||
+      d.guid["#text"] === decodeURIComponent(data.params.episode)
+    );
+  });
 
-  const e = useMemo(() => {
-    return episodeList.map((d) => {
-      return {
-        publishOnUnixTimestamp: d.publishOnUnixTimestamp,
-        title: d.title,
-        pubDate: d.pubDate,
-        enclosure: d.enclosure,
-        src: d.enclosure["@_url"],
-        length: d.enclosure["@_length"],
-        episode: d["itunes:episode"],
-      };
-    });
-  }, [episodeList]);
-
-  const episode = e.find(
-    (d) => d.episode === parseInt(data.params.episode, 10)
-  );
-
-  const audioRef = useRef<HTMLAudioElement>();
-  const a = () => {
-    const currentTime = audioRef.current?.currentTime;
-    const url = `${location.pathname}${
-      currentTime ? `?s=${Math.floor(currentTime)}` : ""
-    }`;
-    // https://developer.mozilla.org/ja/docs/Web/API/History/replaceState
-    history.replaceState(null, "", url);
-  };
-  useEffect(() => {
-    if (!audioRef.current) {
-      return;
-    }
-    audioRef.current.addEventListener("timeupdate", a);
-
-    audioRef.current.currentTime =
-      new URL(location.href).searchParams.get("s") | 0;
-    return () => document.removeEventListener("timeupdate", a);
-  }, [audioRef.current]);
+  const text = `
+`;
+  const tweetLink = `https://twitter.com/intent/tweet?text=${text}`;
 
   return (
     <div>
-      <h1>{data?.podcastName}</h1>
+      <h1>{data?.podcast?.title}</h1>
 
-      {episode && audioRef && (
-        <audio controls src={episode.src} key={episode.src} ref={audioRef} />
-      )}
-      {e.map((e, i) => {
-        return (
-          <div key={i}>
-            <Link to={`/content/${data.params.podcastName}/${e.episode}`}>
-              {e.title}
-            </Link>
-          </div>
-        );
-      })}
+      {episode && <Player src={episode.enclosure["@url"]} />}
+      <EpisodeList
+        episodeList={episodeList}
+        podcastName={data.params.podcastName}
+      />
     </div>
   );
 }

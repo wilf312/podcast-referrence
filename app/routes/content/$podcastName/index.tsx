@@ -1,14 +1,13 @@
-import { useMemo } from "react";
 import { json } from "@remix-run/cloudflare";
 import { useLoaderData } from "@remix-run/react";
 import type { LoaderFunction } from "@remix-run/cloudflare";
-import { Link } from "@remix-run/react";
-
+import { EpisodeList } from "~/components/stateless/EpisodeList";
+import { Player } from "~/components/stateless/Player";
 export const loader: LoaderFunction = async ({ params, request }) => {
   const url = new URL(request.url);
-  const podcast = await fetch(`${url.origin}/api/update`).then((res) =>
-    res.json()
-  );
+  const podcast = await fetch(
+    `${url.origin}/api/get/${params.podcastName}`
+  ).then((res) => res.json());
 
   return json({
     params,
@@ -18,39 +17,18 @@ export const loader: LoaderFunction = async ({ params, request }) => {
 export default function Index() {
   const data = useLoaderData<typeof loader>();
 
-  const main = data.podcast;
   const episodeList = data.podcast.item;
-
-  const e = useMemo(() => {
-    return episodeList.map((d) => {
-      return {
-        publishOnUnixTimestamp: d.publishOnUnixTimestamp,
-        title: d.title,
-        pubDate: d.pubDate,
-        enclosure: d.enclosure,
-        src: d.enclosure["@_url"],
-        length: d.enclosure["@_length"],
-        episode: d["itunes:episode"],
-      };
-    });
-  }, [episodeList]);
-
-  const episode = e.at(0);
+  const episode = episodeList.at(0);
 
   return (
     <div>
-      <h1>{data?.podcastName}</h1>
+      <h1>{data?.podcast?.title}</h1>
 
-      {episode && <audio controls src={episode.src} key={episode.src} />}
-      {e.map((e, i) => {
-        return (
-          <div key={i}>
-            <Link to={`/content/${data.params.podcastName}/${e.episode}`}>
-              {e.title}
-            </Link>
-          </div>
-        );
-      })}
+      {episode && <Player src={episode.enclosure["@url"]} />}
+      <EpisodeList
+        episodeList={episodeList}
+        podcastName={data.params.podcastName}
+      />
     </div>
   );
 }
