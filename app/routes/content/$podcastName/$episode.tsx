@@ -35,16 +35,14 @@ export default function Index() {
     );
   });
 
-  const tweetLink = useMemo(() => {
-    let search = "";
-    if (global.location) {
-      search = location.search;
-    }
-    const text = encodeURIComponent(
-      `${data.href}${search} #${data?.config?.hash}`
-    );
-    return `https://twitter.com/intent/tweet?text=${text}`;
-  }, []);
+  let search = "";
+  if (global.location) {
+    search = location.search;
+  }
+  const text = encodeURIComponent(
+    `${data.href}${search} #${data?.config?.hash}`
+  );
+  const tweetLink = `https://twitter.com/intent/tweet?text=${text}`;
 
   return (
     <div>
