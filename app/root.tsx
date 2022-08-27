@@ -7,14 +7,15 @@ import {
   Scripts,
   ScrollRestoration,
 } from "@remix-run/react";
+import { withSentry } from "@sentry/remix";
 
 export const meta: MetaFunction = () => ({
   charset: "utf-8",
-  title: "New Remix App",
+  title: "Podcast Referrence",
   viewport: "width=device-width,initial-scale=1",
 });
 
-export default function App() {
+function App() {
   return (
     <html lang="ja">
       <head>
@@ -30,3 +31,5 @@ export default function App() {
     </html>
   );
 }
+
+export default withSentry(App);
