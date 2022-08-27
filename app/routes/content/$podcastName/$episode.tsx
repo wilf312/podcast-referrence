@@ -1,4 +1,3 @@
-import { useMemo } from "react";
 import { json } from "@remix-run/cloudflare";
 import { useLoaderData } from "@remix-run/react";
 import type { LoaderFunction } from "@remix-run/cloudflare";
@@ -6,13 +5,10 @@ import { EpisodeList } from "~/components/stateless/EpisodeList";
 import type { EpisodeItem } from "~/components/stateless/EpisodeList";
 import { Player } from "~/components/stateless/Player";
 import { findPodcastConfig } from "~/config";
+import { getPodcast } from "~/api";
 
 export const loader: LoaderFunction = async ({ params, request }) => {
-  const url = new URL(request.url);
-  const podcast = await fetch(
-    `${url.origin}/api/get/${params.podcastName}`
-  ).then((res) => res.json());
-
+  const podcast = await getPodcast(params.podcastName || "");
   const config = findPodcastConfig(params.podcastName || "");
 
   return json({
