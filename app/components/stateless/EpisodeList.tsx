@@ -33,9 +33,9 @@ export const EpisodeList = (props: {
     return (
       <div key={d.enclosure["@url"]}>
         <Link
-          to={`/content/${props.podcastName}/${
-            d["itunes:episode"] || encodeURIComponent(d.guid["#text"])
-          }`}
+          to={`/content/${props.podcastName}/${encodeURIComponent(
+            d.guid["#text"]
+          )}`}
         >
           {d.title}
         </Link>

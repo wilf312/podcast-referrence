@@ -25,18 +25,18 @@ export default function Index() {
 
   const episodeList = data.podcast.item;
   const episode = episodeList.find((d: EpisodeItem) => {
-    return (
-      `${d["itunes:episode"]}` === data.params.episode ||
-      d.guid["#text"] === decodeURIComponent(data.params.episode)
-    );
+    return d.guid["#text"] === decodeURIComponent(data.params.episode);
   });
 
   let search = "";
   if (global.location) {
     search = location.search;
   }
+  console.log({ episode });
   const text = encodeURIComponent(
-    `${data.href}${search} #${data?.config?.hash}`
+    `${data.href}${search} #${data?.config?.hash}${
+      episode["itunes:episode"] ? `.${episode["itunes:episode"]}` : ""
+    }`
   );
   const tweetLink = `https://twitter.com/intent/tweet?text=${text}`;
 
