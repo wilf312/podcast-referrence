@@ -40,7 +40,7 @@ export const Player = (props: props) => {
         onPlay={props.onPlay}
       />
       <a href={props.tweetUrl} target="_blank" rel="noreferrer">
-        ツイーヨ
+        ツイート
       </a>
     </div>
   );
