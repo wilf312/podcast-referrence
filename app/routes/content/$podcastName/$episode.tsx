@@ -28,24 +28,16 @@ export default function Index() {
     return d.guid["#text"] === decodeURIComponent(data.params.episode);
   });
 
-  let search = "";
-  if (global.location) {
-    search = location.search;
-  }
-  console.log({ episode });
-  const text = encodeURIComponent(
-    `${data.href}${search} #${data?.config?.hash}${
-      episode["itunes:episode"] ? `.${episode["itunes:episode"]}` : ""
-    }`
-  );
-  const tweetLink = `https://twitter.com/intent/tweet?text=${text}`;
-
   return (
     <div>
       <h1>{data?.podcast?.title}</h1>
 
       {episode && (
-        <Player src={episode.enclosure["@url"]} tweetUrl={tweetLink} />
+        <Player
+          hash={data.params.podcastName}
+          episodeNo={episode["itunes:episode"]}
+          src={episode.enclosure["@url"]}
+        />
       )}
       <EpisodeList
         episodeList={episodeList}
