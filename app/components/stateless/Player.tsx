@@ -1,47 +1,28 @@
-import { useRef, useEffect } from "react";
+import { usePlayer } from "~/domain/player";
 
 type props = {
   src: string;
-  tweetUrl: string;
-  onPlay?: () => void;
+  hash: string;
+  episodeNo: number;
 };
 export const Player = (props: props) => {
-  const audioRef = useRef<HTMLAudioElement>();
-
-  const a = () => {
-    const currentTime = audioRef.current?.currentTime;
-    const url = `${location.pathname}${
-      currentTime ? `?s=${Math.floor(currentTime)}` : ""
-    }`;
-    // https://developer.mozilla.org/ja/docs/Web/API/History/replaceState
-    history.replaceState(null, "", url);
-  };
-  /**
-   * when: audioRef.currentが存在するとき
-   * action: queryの ?s=10 を parseして audioの現在の再生時間に10を設定する
-   */
-  useEffect(() => {
-    if (!audioRef.current) {
-      return;
-    }
-
-    audioRef.current.currentTime =
-      parseInt(new URL(location.href).searchParams.get("s"), 10) || 0;
-  }, [audioRef.current]);
+  const player = usePlayer({ hash: props.hash, episodeNo: props.episodeNo });
+  console.log({ player, aaa: player.tweetLink, props });
 
   return (
     <div>
       <audio
         controls
         src={props.src}
-        ref={audioRef}
+        ref={player.audioRef}
         style={{ width: "95vw" }}
-        onTimeUpdate={a}
-        onPlay={props.onPlay}
+        onTimeUpdate={player.onTimeUpdate}
       />
-      <a href={props.tweetUrl} target="_blank" rel="noreferrer">
-        ツイート
-      </a>
+      {player.tweetLink && (
+        <a href={`${player.tweetLink}`} target="_blank" rel="noreferrer">
+          ツイート
+        </a>
+      )}
     </div>
   );
 };
