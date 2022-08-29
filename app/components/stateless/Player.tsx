@@ -1,4 +1,4 @@
-import { usePlayer } from "~/domain/player";
+import { usePlayer, useTweetLink } from "~/domain/player";
 
 type props = {
   src: string;
@@ -6,8 +6,12 @@ type props = {
   episodeNo: number;
 };
 export const Player = (props: props) => {
-  const player = usePlayer({ hash: props.hash, episodeNo: props.episodeNo });
-  console.log({ player, aaa: player.tweetLink, props });
+  const player = usePlayer();
+  const tweetLink = useTweetLink({
+    hash: props.hash,
+    episodeNo: props.episodeNo,
+    currentTime: player.currentTime,
+  });
 
   return (
     <div>
@@ -18,8 +22,8 @@ export const Player = (props: props) => {
         style={{ width: "95vw" }}
         onTimeUpdate={player.onTimeUpdate}
       />
-      {player.tweetLink && (
-        <a href={`${player.tweetLink}`} target="_blank" rel="noreferrer">
+      {tweetLink && (
+        <a href={`${tweetLink}`} target="_blank" rel="noreferrer">
           ツイート
         </a>
       )}

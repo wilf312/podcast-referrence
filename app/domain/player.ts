@@ -1,9 +1,6 @@
 import { useRef, useEffect, useState, useMemo } from "react";
 
-export const usePlayer = (props: {
-  hash: string;
-  episodeNo: number | null;
-}) => {
+export const usePlayer = () => {
   const audioRef = useRef<HTMLAudioElement | null>(null);
   const [currentTime, setCurrentTime] = useState<number | null>(null);
 
@@ -40,6 +37,18 @@ export const usePlayer = (props: {
 
   // const search = currentTime ? `?s=${currentTime}` : "";
 
+  return {
+    audioRef,
+    onTimeUpdate,
+    currentTime,
+  };
+};
+
+export const useTweetLink = (props: {
+  hash: string;
+  episodeNo: number | null;
+  currentTime: number | null;
+}) => {
   const tweetLink = useMemo(() => {
     let href = "";
     if (!global.location) {
@@ -50,12 +59,7 @@ export const usePlayer = (props: {
       `${href} #${props.hash}${props.episodeNo ? `.${props.episodeNo}` : ""}`
     );
     return `https://twitter.com/intent/tweet?text=${text}`;
-  }, [props.hash, props.episodeNo]);
+  }, [props.hash, props.episodeNo, props.currentTime]);
 
-  return {
-    audioRef,
-    onTimeUpdate,
-    currentTime,
-    tweetLink,
-  };
+  return tweetLink;
 };
