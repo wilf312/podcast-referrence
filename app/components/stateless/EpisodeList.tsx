@@ -29,17 +29,21 @@ export const EpisodeList = (props: {
   episodeList: EpisodeItem[];
   podcastName: string;
 }) => {
-  return props.episodeList.map((d) => {
-    return (
-      <div key={d.enclosure["@url"]}>
-        <Link
-          to={`/content/${props.podcastName}/${encodeURIComponent(
-            d.guid["#text"]
-          )}`}
-        >
-          {d.title}
-        </Link>
-      </div>
-    );
-  });
+  return (
+    <div>
+      {props.episodeList.map((d) => {
+        return (
+          <div key={d.enclosure["@url"]}>
+            <Link
+              to={`/content/${props.podcastName}/${encodeURIComponent(
+                d.guid["#text"]
+              )}`}
+            >
+              {d.title}
+            </Link>
+          </div>
+        );
+      })}
+    </div>
+  );
 };
