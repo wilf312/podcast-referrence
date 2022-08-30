@@ -5,7 +5,7 @@ export default function Index() {
 
   return (
     <div style={{ fontFamily: "system-ui, sans-serif", lineHeight: "1.4" }}>
-      <h1>hello world</h1>
+      <h1>Voice Camp</h1>
       {a.map((data) => {
         return (
           <Link to={`/content/${data.hashEncoded}/`} key={data.hashEncoded}>
