@@ -15,9 +15,9 @@ export const usePlayer = () => {
       const url = `${location.pathname}${`?s=${_floored}`}`;
       // https://developer.mozilla.org/ja/docs/Web/API/History/replaceState
       history.replaceState(null, "", url);
-      setCurrentTime(_floored);
     }
   };
+
   /**
    * when: usePlayer読み込みしたあと、audioRef.currentが存在するとき
    * action: queryの ?s=10 を parseして audioの現在の再生時間に10を設定する
@@ -38,14 +38,15 @@ export const usePlayer = () => {
   // const search = currentTime ? `?s=${currentTime}` : "";
 
   return {
+    currentTime,
     audioRef,
     onTimeUpdate,
-    currentTime,
   };
 };
 
 export const useTweetLink = (props: {
   hash: string;
+  title?: string;
   episodeNo: number | null;
   currentTime: number | null;
 }) => {
@@ -56,10 +57,12 @@ export const useTweetLink = (props: {
     }
     href = global.location.href;
     const text = encodeURIComponent(
-      `${href} #${props.hash}${props.episodeNo ? `.${props.episodeNo}` : ""}`
+      `${props?.title} ${href} #${props.hash}${
+        props.episodeNo ? `.${props.episodeNo}` : ""
+      }`
     );
     return `https://twitter.com/intent/tweet?text=${text}`;
-  }, [props.hash, props.episodeNo, props.currentTime]);
+  }, [props?.title, props.hash, props.episodeNo, props.currentTime]);
 
   return tweetLink;
 };
