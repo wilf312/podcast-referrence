@@ -21,20 +21,20 @@ export const loader: LoaderFunction = async ({ params, request }) => {
 export default function Index() {
   const data = useLoaderData<typeof loader>();
 
-  console.log(data);
-
   const episodeList = data.podcast.item;
-  const episode = episodeList.find((d: EpisodeItem) => {
+  const episode: EpisodeItem | null = episodeList.find((d: EpisodeItem) => {
     return d.guid["#text"] === decodeURIComponent(data.params.episode);
   });
 
   return (
     <div>
-      <h1>{data?.podcast?.title}</h1>
+      <h1>{episode?.title}</h1>
+      <h2>{data?.podcast?.title}</h2>
 
       {episode && (
         <Player
           hash={data.params.podcastName}
+          title={episode?.title}
           episodeNo={episode["itunes:episode"]}
           src={episode.enclosure["@url"]}
         />
