@@ -10,7 +10,7 @@ import {
 
 export const meta: MetaFunction = () => ({
   charset: "utf-8",
-  title: "Podcast Referrence",
+  title: "Voice Camp",
   viewport: "width=device-width,initial-scale=1",
 });
 
@@ -20,6 +20,20 @@ export default function App() {
       <head>
         <Meta />
         <Links />
+        <div
+          dangerouslySetInnerHTML={{
+            __html: `
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-V2PCYD70QR"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-V2PCYD70QR');
+</script>`,
+          }}
+        />
       </head>
       <body>
         <Outlet />
