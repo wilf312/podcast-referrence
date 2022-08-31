@@ -322,6 +322,72 @@ export const urlList: UrlListItem[] = [
     hash: "ドングリFM",
     url: "http://feeds.soundcloud.com/users/soundcloud:users:170031062/sounds.rss",
   },
+
+  {
+    name: "テストラジオ",
+    hash: "テストラジオ",
+    url: "https://testradio.fm/feed/podcast/",
+  },
+
+  {
+    name: "The Potluck",
+    hash: "ThePotluck",
+    url: "https://anchor.fm/s/bf3149c/podcast/rss",
+  },
+
+  {
+    name: "fukabori.fm",
+    hash: "fukabori",
+    url: "https://pitpa.jp/rss/fukabori",
+  },
+
+  {
+    name: "ごりゅごcast",
+    hash: "ごりゅごcast",
+    url: "https://anchor.fm/s/2e56f6c/podcast/rss",
+  },
+
+  {
+    name: "UIT INSIDE",
+    hash: "UIT_INSIDE",
+    url: "https://uit-inside.linecorp.com/feed.atom",
+  },
+
+  {
+    name: "Peapod by Peatix - ここでしか聞けない楽屋トーク",
+    hash: "Peapod",
+    url: "https://feeds.buzzsprout.com/782645.rss",
+  },
+
+  {
+    name: "日本人の英語を変える！ポッドキャスト",
+    hash: "日本人の英語を変える！ポッドキャスト",
+    url: "https://anchor.fm/s/3c1b4ec8/podcast/rss",
+  },
+
+  {
+    name: "ポッドキャスト Export",
+    hash: "exportfm",
+    url: "https://export.fm/feed",
+  },
+
+  {
+    name: "田舎.fm",
+    hash: "田舎fm",
+    url: "https://komatatsu.github.io/inaka-fm/feed.xml",
+  },
+
+  {
+    name: "人生fm",
+    hash: "jinseifm",
+    url: "https://kirimin.github.io/jinseifm/feed.xml",
+  },
+
+  {
+    name: "soussune - エンジニアわいわいポッドキャスト「そうっすね」",
+    hash: "soussune",
+    url: "https://soussune.com/feed.xml",
+  },
 ];
 
 /**
